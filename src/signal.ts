@@ -51,7 +51,7 @@ class Signal<T> {
 	/** Every change increments this version counter. Just a meta info. */
 	protected _version = 0;
 
-	/** Circular update tracker */
+	/** (potentially circular) update tracker */
 	protected _updateCount = 0;
 
 	/**  */
