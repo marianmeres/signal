@@ -57,7 +57,7 @@ class Signal<T> {
 	/**  */
 	constructor(
 		initialValue: T,
-		public readonly id = `#s${_id++}` // "s" as "signal"
+		public readonly id: string = `#s${_id++}` // "s" as "signal"
 	) {
 		// this is a best practice violation error, rather than purely technical one
 		if (__currentEffect) {
@@ -152,7 +152,12 @@ class Signal<T> {
 	 * In other words, even if accessing signal.meta from inside of a effect fn,
 	 * that effect won't become reactive.
 	 **/
-	get meta() {
+	get meta(): {
+		id: string;
+		effects: string[];
+		version: number;
+		value: T;
+	} {
 		return {
 			id: this.id,
 			effects: [...this._effects.values().map((e) => `${eid(e)}`)],
@@ -210,7 +215,7 @@ export function effect(
 	/** The actual effect worker. MUST be synchronous. */
 	fn: () => void,
 	options?: Partial<{ name: string }>
-) {
+): any {
 	if (__currentEffect) {
 		// This is not worth the dance... it smells anyway.
 		throw new Error(
