@@ -25,7 +25,7 @@ const a = state(0);
 const b = state(0);
 const sum = derived(() => a.value + b.value);
 
-// logs now (a.k.a. onMount): "0 + 0 = 0"
+// Runs first time immediately. Logs: "0 + 0 = 0"
 effect(() => {
     console.log(`${a.value} + ${b.value} = ${sum.value}`)
 });
